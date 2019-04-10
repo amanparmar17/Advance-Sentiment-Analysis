@@ -1,0 +1,22 @@
+Minor124.csvv==================
+ original crawled tweets contianing duplicates , total tweets 6000
+
+
+main_data.csv================
+ cleaning of the data of minor124 file to remove duplicacy, fial count of distinct tweets =4564
+
+tokenisation.r==============
+  form tokens , stemming , remove stopwords from the datset main_data.csv and store the tokens formed for each tweet 
+
+trial.r===========
+	for performing allthe trial work
+
+
+find_pos_neg_words=========
+	calculating the sentiments of the tweets using the sentimentr package
+
+
+perform --counting negative and pos-- by using
+dplyr-tidytext-tidyverse
+or
+sentimentr
