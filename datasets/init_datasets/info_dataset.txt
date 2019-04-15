@@ -1,0 +1,18 @@
+sentiment.csv=
+	
+	original kaggle dataset containing 14640 rows,15 cols
+
+sentiment_edited.csv=
+
+	removed some extra cols 
+	contains 1019 columns with tweet_coord not null, thus can be used 	  as test data--- coz this data can be demographically plotted 		because of the coordinates provided
+
+Minor.csv=
+	
+	contains the crawled 4564 tweets
+
+main_dataset.csv=
+
+	contains the tweets along with sentiment sentiment_value 		calculated using sentimentr package
+
+
