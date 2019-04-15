@@ -31,7 +31,7 @@
 library(sentimentr)
 library(tokenizers)
 
-file=read.csv("datasets/main_dataset.csv",header=TRUE)
+file=read.csv("main_dataset.csv",header=TRUE)
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
 for(i in 1:nrow(file))
@@ -68,26 +68,26 @@ for(i in 1:nrow(file))
   
   #proving the apt sentiment to the sentiment on the basis of the senti value returned
   #along with a proper confidence value (in %) 
-  if(senti<0)
+  if(senti[1][[4]]<0)
   {
     sentiment="negative"
-    confidence=abs(senti)*100
+    confidence=senti[1][[4]]*100
   }
   
-  if(senti>0)
+  if(senti[1][[4]]>0)
   {
     sentiment="positive"
-    confidence=abs(senti)*100
+    confidence=senti[1][[4]]*100
   }
   
-  if(senti==0)
+  if(senti[1][[4]] == 0)
   {
     sentiment="neutral"
     confidence=100
   }
   
   dfrm <- data.frame(text,confidence,sentiment)
-  write.table(dfrm,file="sentiment_sentimentr_pack.csv", append=TRUE, sep=" , ", col.names = FALSE) 
+  write.table(dfrm,file="sentiment_sentimentr_pack.csv", append=TRUE,sep = "," ,col.names = FALSE) 
   
 }
 
