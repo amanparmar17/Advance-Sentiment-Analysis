@@ -1,0 +1,130 @@
+# commands used for filtering the datsets to make new ones with the required attrs
+
+
+# =========================================================================================
+#   ===================================================================================
+
+
+#this is all trial commands run
+
+# getwd()
+# setwd("git_repos/")
+# setwd("Advance-Sentiment-Analysis/")
+# file=read.csv("datasets/init_datasets/sentiment_edited.csv",header=TRUE)
+# sum(file$tweet_coord != "")
+# fi=read.csv("datasets/init_datasets/sentiment.csv",header=TRUE)
+# dim(fi)
+# dim(file)
+# colnames(file)
+# new_DF <- file[rowSums(is.na(file$tweet_coord)) > 0,]
+# new_DF <- file[rowSums(is.na(file)) > 0,]
+# dim(new_DF)
+# colnames(new_DF)
+# head(new_DF$tweet_coord)
+# write.table(dfrm,file="trial_file.csv", append=TRUE,sep = "," ,col.names = FALSE)
+# write.table(new_DF,file="trial_file.csv", append=TRUE,sep = "," ,col.names = FALSE)
+# new_DF <- subset(file, !is.na(file$tweet_coord))
+# write.table(new_DF,file="trial_file.csv", append=TRUE,sep = "," ,col.names = FALSE)
+# new_DF <- subset(file, is.na(file$tweet_coord))
+# write.table(new_DF,file="trial_file.csv", append=TRUE,sep = "," ,col.names = FALSE)
+# write.table(new_DF,file="trial_file.csv", append=TRUE,sep = "," ,col.names = TRUE)
+# new_DF <- subset(file, is.null(file$tweet_coord))
+# write.table(new_DF,file="trial_file.csv", append=TRUE,sep = "," ,col.names = TRUE)
+# dff <- subset(file, is.null(file$tweet_coord))
+# colnames(dff)
+# dff[1:1,"tweet_coord"]
+# is.na(dff[1:1,"tweet_coord"])
+# !is.na(dff[1:1,"tweet_coord"])
+# dff=file[!is.na(file$tweet_coord)]
+# colnames(file)
+# dff=file[is.na(file$tweet_coord)]
+# dim(dff)
+# dff=file[is.na(file$tweet_coord) || is.null]
+# dff=file[is.na(file$tweet_coord) || is.null(file$tweet_coord)]
+# dim(dff)
+# file=read.csv("datasets/init_datasets/sentiment_edited.csv",header=TRUE,na.strings=c("","NA"))
+# write.table(file,file="trial_file.csv", append=TRUE,sep = "," ,col.names = TRUE)
+# file=read.csv("datasets/init_datasets/sentiment_edited.csv",header=TRUE,na.strings=c(""," ","NA"))
+# write.table(file,file="trial_file.csv", append=TRUE,sep = "," ,col.names = TRUE)
+# file=read.csv("trial_file.csv",header=FALSE,na.strings=c(""," ","NA"))
+# dim(file)
+# file=read.csv("datasets/init_datasets/sentiment_edited.csv",header=TRUE,na.strings=c(""," ","NA"))
+# dff=file[is.na(file$tweet_coord) || is.null(file$tweet_coord)]
+# write.table(dff,file="trial_file.csv", append=TRUE,sep = "," ,col.names = TRUE)
+# file=read.csv("trial_file.csv",header=FALSE)
+# dim(file)
+# file=read.csv("datasets/init_datasets/sentiment_edited.csv",header=TRUE,na.strings=c("",," ","NA"))
+# file=read.csv("datasets/init_datasets/sentiment_edited.csv",header=TRUE,na.strings=c(""," ","NA"))
+# dim(file)
+# colnames(file)
+# sum(is.na(file$tweet_coord))
+# dff=file[!is.na(file$tweet_coord)]
+# dff=file[is.na(file$tweet_coord)]
+# dff <- subset(file, !is.na(file$tweet_coord))
+# dim(dff)
+# write.csv(dff,"trial_data.csv")
+# dff <- subset(file, is.na(file$tweet_coord))
+# DIM(DFF)
+# dim(diff)
+# dim(dff)
+
+
+# ==========================================================================================
+#   ====================================================================================
+
+
+# final commands run are
+
+#for writing the test dataset
+
+file=read.csv("datasets/init_datasets/sentiment_edited.csv",header=TRUE,na.strings=c("",," ","NA"))
+Error in c("", , " ", "NA") : argument 2 is empty
+> 
+  > file=read.csv("datasets/init_datasets/sentiment_edited.csv",header=TRUE,na.strings=c(""," ","NA"))
+> 
+  > dim(file)
+[1] 14640     9
+> colnames(file)
+[1] "airline_sentiment"            "airline_sentiment_confidence"
+[3] "negativereason"               "negativereason_confidence"   
+[5] "airline"                      "text"                        
+[7] "tweet_coord"                  "tweet_location"              
+[9] "user_timezone"               
+> sum(is.na(file$tweet_coord))
+[1] 13621
+> dff=file[!is.na(file$tweet_coord)]
+Error in `[.data.frame`(file, !is.na(file$tweet_coord)) : 
+  undefined columns selected
+> dff=file[is.na(file$tweet_coord)]
+Error in `[.data.frame`(file, is.na(file$tweet_coord)) : 
+  undefined columns selected
+> dff <- subset(file, !is.na(file$tweet_coord))
+> dim(dff)
+[1] 1019    9
+> write.csv(dff,"trial_data.csv")
+> dff <- subset(file, is.na(file$tweet_coord))
+> DIM(DFF)
+Error in DIM(DFF) : could not find function "DIM"
+> dim(diff)
+NULL
+> dim(dff)
+[1] 13621     9
+
+
+
+# ========================================================================================
+#   ===================================================================================
+
+# final commans for writing the test dataset
+
+> file=read.csv("datasets/init_datasets/sentiment_edited.csv",header=TRUE,na.strings=c(""," ","NA"))
+> 
+  > 
+  > dim(file)
+[1] 14640     9
+> dff <- subset(file, is.na(file$tweet_coord))
+> 
+  > dim(dff)
+[1] 13621     9
+> write.csv(dff,"trial_data.csv")
+
