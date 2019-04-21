@@ -1,3 +1,5 @@
+#for adding the ASC and NRC columns in the datset 
+
 setwd("git_repos/Advance-Sentiment-Analysis/")
 
 
@@ -7,7 +9,8 @@ setwd("git_repos/Advance-Sentiment-Analysis/")
 library(sentimentr)
 library(tokenizers)
 
-file=read.csv("scripts/classifiers/decision_tree/dec_tree_train.csv",header=TRUE)
+#enter fthe location of the sentiment.csv file
+file=read.csv("sentiment.csv",header=TRUE)
 
 #dim(file)
 #colnames(file)
@@ -48,29 +51,39 @@ for(i in 1:nrow(file))
   
   #proving the apt sentiment to the sentiment on the basis of the senti value returned
   #along with a proper confidence value (in %) 
+  
+  sentiment=""
+  acs=0
+  nrc=0
+  
+  if(senti[1][[4]] == 0)
+  {
+    sentiment="neutral"
+    asc=0
+    nrc=0
+  }
+  
   if(senti[1][[4]]<0)
   {
     sentiment="negative"
-    confidence=senti[1][[4]]*100
+    nrc=senti[1][[4]]*100
+    arc=0
   }
   
   if(senti[1][[4]]>0)
   {
     sentiment="positive"
-    confidence=senti[1][[4]]*100
+    arc=senti[1][[4]]*100
+    nrc=0
   }
   
-  if(senti[1][[4]] == 0)
-  {
-    sentiment="neutral"
-    confidence=0
-  }
+  
   
   airline_name=file[i:i,3]
   timezone=file[i:i,5]
   
-  dfrm <- data.frame(text,confidence,sentiment,airline_name,timezone)
-  write.table(dfrm,file="dec_tree_final_train.csv", append=TRUE,sep = "," ,col.names = FALSE) 
+  dfrm <- data.frame(text,sentiment,arc,nrc,airline_name,timezone)
+  write.table(dfrm,file="calculated_sentiment.csv", append=TRUE,sep = "," ,col.names = FALSE) 
   
 }
 
