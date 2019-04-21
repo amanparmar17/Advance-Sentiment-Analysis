@@ -1,0 +1,23 @@
+calculated_setimeent.r==
+
+	to make the asc and nrc columns by using the sentimentr package to show maam that the dataset has been created by us not downloaded.
+
+
+find_pos_neg_words.R=
+
+	using the sentimentr package to calculate the sentiment and the sentiment value for each of the crawled tweet
+
+	
+run_error_commands.txt==
+	
+	contains all the trail commands executed while creating a dataset
+
+trial.R==
+
+	contians all the extra commands run
+
+tokenisation.R=
+
+	creates the tokens by using the tokenisation and 1-2 more packages and by removing stopwords,etc ---coveing all the extra steps of processing a text
+
+

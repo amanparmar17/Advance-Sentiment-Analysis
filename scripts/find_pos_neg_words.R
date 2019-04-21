@@ -28,8 +28,7 @@
 
 # =====================using sentimentr package===================
 
-library(sentimentr)
-library(tokenizers)
+
 
 file=read.csv("main_dataset.csv",header=TRUE)
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
