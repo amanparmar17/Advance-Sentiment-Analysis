@@ -87,8 +87,8 @@ rpart.plot(fit)
 # #
 
 
-# predicted= predict(fit,dtreeTestingSet)
-# predicted
+predicted= predict(fit,dtreeTestingSet)
+predicted
 
 
 
