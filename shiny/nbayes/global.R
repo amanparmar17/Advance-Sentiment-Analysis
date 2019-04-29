@@ -1,6 +1,6 @@
-#including the libraries
 setwd("/home/aman")
-setwd("git_repos/Advance-Sentiment-Analysis/scripts/classifiers/naive_bayes/")
+setwd("git_repos/Advance-Sentiment-Analysis/shiny/nbayes/")
+
 library(RTextTools)
 library(e1071)
 library(dplyr) 
@@ -13,7 +13,6 @@ library(caret)  #for finding the confusion matrix
 
 dataset<-read.csv("sentiment_sentimentr_pack.csv",header = TRUE,strip.white = TRUE)
 
-#selecting the columns of concern from the imported dataset
 
 responses<-dataset[[3]]
 tweet_text<-dataset[[1]]
@@ -51,50 +50,32 @@ dataset$text<-tweet_text
 datasetrefined <- dataset %>% select(Response = sentiment,tweets = text)
 # datasetrefined
 
-#creating a CSV file to store the columns of concern
+application=datasetrefined
 
-write.csv(datasetrefined,"preprocessed_dataset.csv",row.names = F)
-
-#importing the refined dataset
-
-application<-read.csv("preprocessed_dataset.csv")
-
-#setting up the sample size
-
-smp_size <- floor(0.75 * nrow(application))
-
-#setting seed
 
 set.seed(123)
+smp_size <- floor(0.75 * nrow(application))
 
 #preparing the training set and storing the training set data in a separate CSV file
 
 train_ind <- sample(seq_len(nrow(application)), size = smp_size)
 train <- application[train_ind, ]
-write.csv(train,"training_dataset.csv",row.names = F)
-
-#preparing the test set and storing the test set data in a separate CSV file
-
 test <- application[-train_ind, ]
-write.csv(test,"testing_dataset.csv",row.names = F)
 
-#creating the sparse matrix of the training set
 
 mat_train= create_matrix(train$tweets, language="english", 
                          removeStopwords=FALSE, removeNumbers=FALSE, 
                          stemWords=FALSE) 
 matrix_train = as.matrix(mat_train)
 
-#fitting the NaiveBayes classifier to the training set data
-
-classifier = naiveBayes(matrix_train, (train$Response))
-
-#creating the sparse matrix of the test set data
 
 mat_test= create_matrix(test$Response, language="english", 
                         removeStopwords=TRUE, removeNumbers=FALSE, 
                         stemWords=FALSE) 
 matrix_test = as.matrix(mat_test)
+
+
+classifier <- readRDS('model.rds')
 
 
 predicted = predict(classifier,matrix_test[1:700,])
@@ -115,39 +96,9 @@ predicted_table
 predicted_accuracy<-recall_accuracy(test[1:700,1], predicted)
 predicted_accuracy
 
-#confusion matrix 
-
 predicted_data=as.factor(predicted)
 original_class=as.factor(rownames(matrix_test[1:700,]))
 
 results <- confusionMatrix(data=predicted_data, reference=original_class)
 print(results)
-
-
-
-
-#trianing is done on 3400+ rows
-# and testing on 700 row for now
-
-
-# accuracy received was 0.8185714
-
-#confusion matrix
-#                   predicted
-#               negative neutral positive
-# negative        0     127        0
-# neutral         0     149        0
-# positive        0       0      424
-
-
-
-
-
-#dumping the model for future ref
-
-
-saveRDS(classifier, file = "model.rds")
-
-#loading the model again
-classifier <- readRDS('model.rds')
 
