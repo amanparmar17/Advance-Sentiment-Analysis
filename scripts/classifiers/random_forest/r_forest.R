@@ -1,7 +1,8 @@
 # RANDOM FOREST
 
+setwd("/home/aman")
+setwd("git_repos/Advance-Sentiment-Analysis/scripts/classifiers/random_forest/")
 
-setwd("git_repos/Advance-Sentiment-Analysis/")
 
 library(caret)
 library(rpart.plot)
@@ -9,7 +10,7 @@ library(knitr)
 library(rpart)
 library(randomForest)
 
-dataset= read.csv("scripts/classifiers/random_forest/Finale.csv",header = TRUE)
+dataset= read.csv("Ffinale.csv",header = TRUE)
 
 # summary(dataset)
 
@@ -35,7 +36,7 @@ print(section[1:1,])
 #since the number of rows is taking a forever so reducing the number of rows
 
 # number=runif(1,as.integer(0.25*(nrow(dataset))),as.integer(0.75*(nrow(dataset))))
-section=dataset[1:100, c("sentiment", 'range', 'airline', 'timezone')]
+section=dataset[1:800, c("sentiment", 'range', 'airline', 'timezone')]
 newsec=section[complete.cases(section),]
 
 
@@ -55,23 +56,82 @@ set.seed(2)
 
 train_ind <- sample(seq_len(nrow(sec)), size = smp_size)
 train <- sec[train_ind, ]
-write.csv(train,"scripts/classifiers/random_forest/rforest_training.csv",row.names = F)
+uniqueAirline  <- unique(train[,'airline'])
+# uniqueAirline  <- as.vector(data.frame(uniqueAirline))
+uniqueTimezone <- unique(train[,'timezone'])
+# uniqueTimezone <- as.vector(data.frame(uniqueTimezone))
+
+write.csv(train,"rforest_training.csv",row.names = F)
 
 test <- sec[-train_ind, ]
-write.csv(test,"scripts/classifiers/random_forest/rforest_testing.csv",row.names = F)
+
+ for(i in 1:nrow(test)){
+   if(!(test$airline[i] %in% uniqueAirline ) || !(test$timezone[i] %in% uniqueTimezone ) ){
+     test <- test[-i,]
+     # test$airline[i]
+   }
+ }
+
+
+write.csv(test,"rforest_testing.csv",row.names = F)
 
 #importing the training and test set data
 
 # stringsAsFactors:  so as to prevent the strings to be treated as factor objects, as they are very hard to operate on
 
 
-rforestTrainingSet<-read.csv("scripts/classifiers/random_forest/rforest_training.csv",stringsAsFactors = FALSE)
+rforestTrainingSet<-read.csv("rforest_training.csv",stringsAsFactors = TRUE)
 rforestTrainingSet <- rforestTrainingSet[, c("sentiment", 'range', 'airline', 'timezone')]
 rforestTrainingSet <- rforestTrainingSet[complete.cases(rforestTrainingSet),]
 
-rforestTestingSet <-read.csv("scripts/classifiers/random_forest/rforest_testing.csv",stringsAsFactors = FALSE)
 
+rforestTestingSet <-read.csv("rforest_testing.csv",stringsAsFactors = TRUE)
 
-model=randomForest(sentiment ~ range + airline + timezone , data = dtreeTrainingSet, method = "class",ntree = 100, importance = TRUE)
+# rforestTrainingSet$sentiment = as.data.frame(rforestTrainingSet$sentiment)
+# rforestTrainingSet$sentiment = factor(rforestTrainingSet$sentiment)
+
+model=randomForest(sentiment ~  airline + timezone , data = rforestTrainingSet, method = "class",ntree = 100, importance = TRUE)
 
 model
+
+levels(rforestTestingSet$timezone) <- levels(rforestTrainingSet$timezone)
+levels(rforestTestingSet$range) <- levels(rforestTrainingSet$range)
+levels(rforestTestingSet$airline) <- levels(rforestTrainingSet$airline)
+
+# Predicting on train set
+predTrain= predict(model,rforestTrainingSet,type = "class")
+# predTrain
+
+table(predTrain, rforestTrainingSet$sentiment)
+
+# Predicting on test set
+
+predicted= predict(model,rforestTestingSet,type = "class")
+# predicted
+
+mean(predicted == rforestTestingSet$sentiment)
+table(predicted , rforestTestingSet$sentiment)
+
+# To check important variables
+importance(model)        
+varImpPlot(model)  
+plot(model)
+
+
+
+
+
+#manipulating the original data
+original_class=as.factor(rforestTestingSet$sentiment)
+
+results <- confusionMatrix(data=as.factor(predicted), reference=original_class)
+print(results)
+
+#dumping the model for future ref
+saveRDS(model, file = "model.rds")
+
+#loading the model again
+model <- readRDS("forest.rds")
+
+
+

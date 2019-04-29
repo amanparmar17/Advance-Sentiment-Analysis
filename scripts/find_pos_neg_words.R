@@ -1,30 +1,3 @@
-# ========using dplyr and tidytext and tidyverse================
-
-
-
-# library(tidyverse)
-# library(tidytext)
-# library(tokenizers)
-# library(stopwords)
-# 
-# file=read.csv("datasets/main_dataset.csv",header=TRUE)
-# 
-# print(nrow(file))
-# print(length(file))
-# 
-# trim <- function (x) gsub("^\\s+|\\s+$", "", x)
-# 
-# for(i in 1:nrow(file))
-# {
-#   text=trim(file[i:i,2])
-#   
-#   text=toString(text)
-#   x=tokenize_words(text)
-#   
-# }
-
-
-
 
 # =====================using sentimentr package===================
 

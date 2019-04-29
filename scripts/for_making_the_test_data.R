@@ -7,7 +7,7 @@ setwd("git_repos/Advance-Sentiment-Analysis/")
 library(sentimentr)
 library(tokenizers)
 
-file=read.csv("scripts/classifiers/decision_tree/dec_tree_train.csv",header=TRUE)
+file=read.csv("scripts/covered/classifiers/covered_classifiers/decision_tree/dec_tree_train.csv",header=TRUE)
 
 #dim(file)
 #colnames(file)
@@ -68,8 +68,9 @@ for(i in 1:nrow(file))
   
   airline_name=file[i:i,3]
   timezone=file[i:i,5]
+  org_senti=file[i:i,2]
   
-  dfrm <- data.frame(text,confidence,sentiment,airline_name,timezone)
+  dfrm <- data.frame(text,confidence,org_senti,airline_name,timezone)
   write.table(dfrm,file="dec_tree_final_train.csv", append=TRUE,sep = "," ,col.names = FALSE) 
   
 }

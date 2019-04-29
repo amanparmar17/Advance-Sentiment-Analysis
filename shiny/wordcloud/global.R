@@ -1,7 +1,5 @@
-#importing the libraries
-
 setwd("/home/aman")
-setwd("git_repos/Advance-Sentiment-Analysis/scripts/classifiers/WordCloud/")
+setwd("git_repos/Advance-Sentiment-Analysis/shiny/wordcloud/")
 
 library(tm)       #for text mining
 library(SnowballC)      #apply Porter's word stemming algorithm
@@ -12,7 +10,6 @@ library(wordcloud)        #for making wordclouds
 
 dataset<-read.csv("sentiment.csv")
 
-#selecting the column of concern
 
 required<-dataset[[11]]        #tweets column
 
@@ -28,14 +25,6 @@ dataset<-tm_map(dataset,removePunctuation)
 dataset<-tm_map(dataset,stripWhitespace)
 dataset<-tm_map(dataset,stemDocument)
 
-#generating the WordCloud
-
-wordcloud(words = dataset, min.freq = 1,
-          max.words=300, random.order=FALSE, rot.per=0.65, 
-          colors=brewer.pal(8, "Dark2"))
-
-wordcloud(dataset,max.words = 200,random.color = TRUE,random.order=FALSE)
-
 
 
 ####
@@ -46,8 +35,3 @@ d <- data.frame(word = names(v),freq=v)
 head(d, 10)
 
 
-#
-
-barplot(d[1:30,]$freq, las = 2, names.arg = d[1:30,]$word,
-        col ="lightblue", main ="Most frequent words",
-        ylab = "Word frequencies")
